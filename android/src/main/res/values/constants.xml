@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string
+		name="pref_key_puzzle_size">frame_sizes_key</string>
+	<string
+		name="pref_key_puzzle_speed">puzzle_speed</string>
+	<string
+		name="pref_key_use_default_image">use_default_image</string>
+	<string
+		name="pref_key_select_image">select_image_key</string>
+	<string
+		name="pref_key_max_dimension">max_dimension</string>
+
+	<string
+		name="frame_speed_slowest_key">frame_speed_slowest_key</string>
+	<string
+		name="frame_speed_slow_key">frame_speed_slow_key</string>
+	<string
+		name="frame_speed_normal_key">frame_speed_normal_key</string>
+	<string
+		name="frame_speed_fast_key">frame_speed_fast_key</string>
+	<string
+		name="frame_speed_fastest_key">frame_speed_fastest_key</string>
+</resources>

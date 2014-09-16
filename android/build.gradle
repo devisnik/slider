@@ -1,0 +1,57 @@
+apply plugin: 'android'
+
+dependencies {
+    compile project(':model')
+}
+
+ext {
+    VERSION_CODE = 5
+    VERSION_NAME = '1.3.0'
+    APP_NAME     = 'de.devisnik.android.sliding'
+    BUILD_DATE   = today()
+}
+
+def today() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+    return formattedDate
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        applicationId APP_NAME
+        minSdkVersion 8
+        targetSdkVersion 19
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+    }
+    signingConfigs {
+        release {
+            storeFile file(keystoreFile)
+            keyAlias keystoreKeyAlias
+            storePassword keystoreStorePassword
+            keyPassword keystoreKeyPassword
+        }
+    }
+    buildTypes {
+        release {
+            runProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    lintOptions {
+        abortOnError false;
+        lintConfig file('lint_config.xml')
+    }
+}
+
+task archiveRelease(type: Copy) {
+    from 'build/outputs/apk', 'build/outputs/'
+    into "releases/${VERSION_CODE}"
+    include('android-release.apk', 'proguard/**')
+    rename ('android-release.apk', "${APP_NAME}_${BUILD_DATE}_${VERSION_NAME}_${VERSION_CODE}.apk")
+}

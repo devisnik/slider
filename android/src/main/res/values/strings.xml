@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="prefs_category_visualization">Visualization</string>
+	<string name="prefs_category_puzzle">Puzzle</string>
+	<string name="app_name">Slider</string>
+	<string name="settings_name">Slider Settings</string>
+	<string name="app_description">15-puzzle like image tile sliding</string>
+	<string name="frame_speed_slowest">slowest</string>
+	<string name="frame_speed_slow">slow</string>
+	<string name="frame_speed_normal">normal</string>
+	<string name="frame_speed_fast">fast</string>
+	<string name="frame_speed_fastest">fastest</string>
+	<string name="frame_size_tiny">tiny</string>
+	<string name="frame_size_small">small</string>
+	<string name="frame_size_medium">medium</string>
+	<string name="frame_size_large">large</string>
+	<string name="frame_size_huge">huge</string>
+	<string name="pref_title_puzzle_size">Size</string>
+	<string name="pref_dialog_title_puzzle_size">Choose Number of Tiles</string>
+	<string name="pref_title_puzzle_speed">Speed</string>
+	<string name="pref_dialog_title_puzzle_speed">Choose Speed</string>
+	<string name="pref_title_use_default_image">Use Number Tiles</string>
+	<string name="pref_title_select_image">Select Image from Gallery</string>
+	<string name="pref_summary_select_image">Select an image as puzzle source.</string>
+	<string name="image_progress_message">processing image</string>
+	<string name="installer_name">Slider Installer</string>
+	<string name="installer_text">You activate this wallpaper by choosing "Slider" from the list of available wallpapers in the
+		Wallpaper Chooser.</string>
+	<string name="installer_button">Open Wallpaper Chooser</string>
+</resources>

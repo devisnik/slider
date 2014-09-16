@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/de.devisnik.android.sliding"
+>
+	<PreferenceCategory
+		android:title="@string/prefs_category_puzzle"
+	>
+		<ListPreference
+			android:entryValues="@array/frame_sizes_values"
+			android:entries="@array/frame_sizes_names"
+			android:title="@string/pref_title_puzzle_size"
+			android:key="@string/pref_key_puzzle_size"
+			android:dialogTitle="@string/pref_dialog_title_puzzle_size"
+			android:defaultValue="frame_medium_key" />
+		<ListPreference
+			android:key="@string/pref_key_puzzle_speed"
+			android:entries="@array/frame_speed_names"
+			android:entryValues="@array/frame_speed_values"
+			android:defaultValue="@string/frame_speed_normal_key"
+			android:title="@string/pref_title_puzzle_speed"
+			android:dialogTitle="@string/pref_dialog_title_puzzle_speed"
+		></ListPreference>
+	</PreferenceCategory>
+	<PreferenceCategory
+		android:title="@string/prefs_category_visualization"
+	>
+		<CheckBoxPreference
+			android:title="@string/pref_title_use_default_image"
+			android:disableDependentsState="true"
+			android:key="@string/pref_key_use_default_image"
+			android:defaultValue="true" />
+		<Preference
+			android:key="@string/pref_key_select_image"
+			android:title="@string/pref_title_select_image"
+			android:summary="@string/pref_summary_select_image"
+			android:dependency="@string/pref_key_use_default_image" />
+	</PreferenceCategory>
+</PreferenceScreen>

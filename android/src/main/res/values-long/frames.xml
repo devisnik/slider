@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<integer-array name="frame_tiny_key">
+		<item>2</item>
+		<item>3</item>
+	</integer-array>
+	<integer-array name="frame_small_key">
+		<item>3</item>
+		<item>5</item>
+	</integer-array>
+	<integer-array name="frame_medium_key">
+		<item>4</item>
+		<item>7</item>
+	</integer-array>
+	<integer-array name="frame_large_key">
+		<item>5</item>
+		<item>8</item>
+	</integer-array>
+	<integer-array name="frame_huge_key">
+		<item>6</item>
+		<item>10</item>
+	</integer-array>
+</resources>
