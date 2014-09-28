@@ -1,4 +1,4 @@
 language: android
 install: true
-script: ./gradlew -PkeystoreFile=none -PkeystoreKeyAlias=none -PkeystoreStorePassword=none -PkeystoreKeyPassword=none model:test
+script: ./gradlew -PkeystoreFile=none -PkeystoreKeyAlias=none -PkeystoreStorePassword=none -PkeystoreKeyPassword=none check
 
