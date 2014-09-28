@@ -1,8 +1,4 @@
-language: java
-jdk:
-  - oraclejdk7
-  - openjdk7
-  - openjdk6
+language: android
 install: true
 script: ./gradlew -PkeystoreFile=none -PkeystoreKeyAlias=none -PkeystoreStorePassword=none -PkeystoreKeyPassword=none model:test
 
