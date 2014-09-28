@@ -1,4 +1,7 @@
 language: android
+android:
+  components:
+    - build-tools-19.1.0
 install: true
 script: ./gradlew -PkeystoreFile=none -PkeystoreKeyAlias=none -PkeystoreStorePassword=none -PkeystoreKeyPassword=none check
 
