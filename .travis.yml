@@ -4,5 +4,5 @@ jdk:
   - openjdk7
   - openjdk6
 install: true
-script: ./gradlew test
+script: ./gradlew model:test
 
