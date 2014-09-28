@@ -30,18 +30,22 @@ android {
         versionName VERSION_NAME
     }
     signingConfigs {
-        release {
-            storeFile file(keystoreFile)
-            keyAlias keystoreKeyAlias
-            storePassword keystoreStorePassword
-            keyPassword keystoreKeyPassword
+        if (hasProperty('keystoreFile')) {
+          release {
+              storeFile file(keystoreFile)
+              keyAlias keystoreKeyAlias
+              storePassword keystoreStorePassword
+              keyPassword keystoreKeyPassword
+          }
         }
     }
     buildTypes {
         release {
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            if (hasProperty('keystoreFile')) {
+                signingConfig signingConfigs.release
+            }
         }
     }
     lintOptions {
