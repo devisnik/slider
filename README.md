@@ -6,7 +6,7 @@ It's available for free from the [Google Play Store](https://play.google.com/sto
 
 ### License
 
-    (c) Copyright 2014 Novoda
+    (c) Copyright 2014 
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
