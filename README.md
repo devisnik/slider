@@ -4,6 +4,8 @@ Slider is an Android Live Wallpaper that animates images like a 15-puzzle slidin
 
 It's available for free from the [Google Play Store](https://play.google.com/store/apps/details?id=de.devisnik.android.sliding).
 
+![screenshot](https://github.com/devisnik/slider/blob/master/android/artwork/screenshots/slider_1.png)
+
 ### Travis Build Status
 
 [![Build Status](https://travis-ci.org/devisnik/slider.png)](https://travis-ci.org/devisnik/slider)
