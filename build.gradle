@@ -1,15 +1,17 @@
 buildscript {
     repositories {
+        google()
         mavenCentral()
     }
     //noinspection GroovyAssignabilityCheck
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:7.4.0'
     }
 }
 
 allprojects {
     repositories {
+        google()
         mavenCentral()
     }
 }
