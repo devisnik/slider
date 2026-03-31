@@ -7,8 +7,6 @@ val appVersionName = "1.3.0"
 
 android {
     compileSdk = 36
-    buildToolsVersion = "30.0.3"
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
