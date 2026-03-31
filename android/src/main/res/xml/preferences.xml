@@ -21,6 +21,14 @@
 			android:title="@string/pref_title_puzzle_speed"
 			android:dialogTitle="@string/pref_dialog_title_puzzle_speed"
 		></ListPreference>
+		<ListPreference
+			android:key="@string/pref_key_wait_after_solved"
+			android:entries="@array/wait_after_solved_names"
+			android:entryValues="@array/wait_after_solved_values"
+			android:defaultValue="8000"
+			android:title="@string/pref_title_wait_after_solved"
+			android:dialogTitle="@string/pref_dialog_title_wait_after_solved"
+		></ListPreference>
 	</PreferenceCategory>
 	<PreferenceCategory
 		android:title="@string/prefs_category_visualization"

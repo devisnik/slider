@@ -32,6 +32,7 @@ public class SlidingPreferencesFragment extends PreferenceFragment
         imagePreference.setOnPreferenceClickListener(this);
         adjustListPreference(R.string.pref_key_puzzle_size);
         adjustListPreference(R.string.pref_key_puzzle_speed);
+        adjustListPreference(R.string.pref_key_wait_after_solved);
     }
 
     @Override

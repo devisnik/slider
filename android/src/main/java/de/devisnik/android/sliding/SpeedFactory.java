@@ -8,14 +8,12 @@ public class SpeedFactory {
 
 		private final int itsScrambleDuration;
 		private final int itsShiftDuration;
-		private final int itsWaitAfterSolved;
 
-		Speed(int scrambleDuration, int shiftDuration, int waitAfterSolved) {
+		Speed(int scrambleDuration, int shiftDuration) {
 			itsScrambleDuration = scrambleDuration;
 			itsShiftDuration = shiftDuration;
-			itsWaitAfterSolved = waitAfterSolved;
 		}
-		
+
 		@Override
 		public int getScrambleDuration() {
 			return itsScrambleDuration;
@@ -25,18 +23,13 @@ public class SpeedFactory {
 		public int getShiftDuration() {
 			return itsShiftDuration;
 		}
-
-		@Override
-		public int getWaitAfterSolved() {
-			return itsWaitAfterSolved;
-		}
 	}
 
-	private static final ISpeed SLOWEST = new Speed(1800, 900, 10000);
-	private static final ISpeed SLOW = new Speed(1200, 600, 10000);
-	private static final ISpeed NORMAL = new Speed(800, 400, 8000);
-	private static final ISpeed FAST = new Speed(500, 250, 5000);
-	private static final ISpeed FASTEST = new Speed(400, 200, 4000);
+	private static final ISpeed SLOWEST = new Speed(1800, 900);
+	private static final ISpeed SLOW = new Speed(1200, 600);
+	private static final ISpeed NORMAL = new Speed(800, 400);
+	private static final ISpeed FAST = new Speed(500, 250);
+	private static final ISpeed FASTEST = new Speed(400, 200);
 	private final Resources itsResources;
 
 	public SpeedFactory(Resources resources) {

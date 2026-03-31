@@ -26,7 +26,7 @@ public class FrameDrawer {
 		Point frameSize = settings.getFrameSize(width, height);
 		itsFrame = createFrame(frameSize);
 		itsTileStore = new TileStore(width, height, settings, itsFrame);
-		itsReplayer = new Replayer(itsFrame, itsTileStore, settings.getSpeed(), preview);
+		itsReplayer = new Replayer(itsFrame, itsTileStore, settings.getSpeed(), settings.getWaitAfterSolved(), preview);
 		mTextPaint = createPaint(Color.WHITE);
 		mTextPaint.setTextSize(24);
 		mBackPaint = createPaint(Color.BLACK);

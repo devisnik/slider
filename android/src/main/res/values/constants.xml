@@ -10,6 +10,8 @@
 		name="pref_key_select_image">select_image_key</string>
 	<string
 		name="pref_key_max_dimension">max_dimension</string>
+	<string
+		name="pref_key_wait_after_solved">wait_after_solved</string>
 
 	<string
 		name="frame_speed_slowest_key">frame_speed_slowest_key</string>

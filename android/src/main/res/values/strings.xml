@@ -19,6 +19,13 @@
 	<string name="pref_dialog_title_puzzle_size">Choose Number of Tiles</string>
 	<string name="pref_title_puzzle_speed">Speed</string>
 	<string name="pref_dialog_title_puzzle_speed">Choose Speed</string>
+	<string name="pref_title_wait_after_solved">Wait After Solved</string>
+	<string name="pref_dialog_title_wait_after_solved">Choose Wait Duration</string>
+	<string name="wait_1s">1 second</string>
+	<string name="wait_2s">2 seconds</string>
+	<string name="wait_4s">4 seconds</string>
+	<string name="wait_8s">8 seconds</string>
+	<string name="wait_16s">16 seconds</string>
 	<string name="pref_title_use_default_image">Use Number Tiles</string>
 	<string name="pref_title_select_image">Select Image from Gallery</string>
 	<string name="pref_summary_select_image">Select an image as puzzle source.</string>

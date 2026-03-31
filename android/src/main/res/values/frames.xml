@@ -50,6 +50,22 @@
 		<item>@string/frame_speed_fastest</item>
 	</string-array>
 	<string-array
+		name="wait_after_solved_names">
+		<item>@string/wait_1s</item>
+		<item>@string/wait_2s</item>
+		<item>@string/wait_4s</item>
+		<item>@string/wait_8s</item>
+		<item>@string/wait_16s</item>
+	</string-array>
+	<string-array
+		name="wait_after_solved_values">
+		<item>1000</item>
+		<item>2000</item>
+		<item>4000</item>
+		<item>8000</item>
+		<item>16000</item>
+	</string-array>
+	<string-array
 		name="frame_speed_values">
 		<item>@string/frame_speed_slowest_key</item>
 		<item>@string/frame_speed_slow_key</item>

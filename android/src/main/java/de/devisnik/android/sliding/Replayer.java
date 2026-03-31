@@ -62,6 +62,7 @@ final class Replayer implements Runnable, IFrameListener {
 	private final Handler itsHandler = new Handler();
 	private boolean itsRunning;
 	private final ISpeed itsSpeed;
+	private final int itsWaitAfterSolved;
 	private final Rescheduler itsRescheduler = new Rescheduler();
 	private final AnimationTracker itsAnimationTracker = new AnimationTracker();
 	private final Scrambler itsScrambler = new Scrambler();
@@ -69,12 +70,13 @@ final class Replayer implements Runnable, IFrameListener {
 	private final boolean itsPreview;
 	private final TileStore itsTileStore;
 
-	Replayer(final IRobotFrame frame, final TileStore tileStore, final ISpeed speed, final boolean preview) {
+	Replayer(final IRobotFrame frame, final TileStore tileStore, final ISpeed speed, final int waitAfterSolved, final boolean preview) {
 		itsFrame = frame;
 		itsTileStore = tileStore;
 		itsPreview = preview;
 		itsFrame.addListener(this);
 		itsSpeed = speed;
+		itsWaitAfterSolved = waitAfterSolved;
 	}
 
 	public void onClick() {
@@ -90,7 +92,7 @@ final class Replayer implements Runnable, IFrameListener {
 			return;
 		if (!itsFrame.replayNext()) {
 			itsTileStore.get(itsFrame.getHole()).setHidden(false);
-			post(itsScrambler, itsPreview ? 1000 : itsSpeed.getWaitAfterSolved());
+			post(itsScrambler, itsPreview ? 1000 : itsWaitAfterSolved);
 		}
 	}
 

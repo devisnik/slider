@@ -67,4 +67,9 @@ public class Settings {
 		String speedSetting = getStringPreference(R.string.pref_key_puzzle_speed, R.string.frame_speed_normal_key);
 		return itsSpeedFactory.getSpeed(speedSetting);
 	}
+
+	public int getWaitAfterSolved() {
+		String value = getStringPreference(R.string.pref_key_wait_after_solved, "8000");
+		return Integer.parseInt(value);
+	}
 }
