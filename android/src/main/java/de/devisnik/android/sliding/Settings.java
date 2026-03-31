@@ -59,7 +59,7 @@ public class Settings {
 		return itsPreferences.getBoolean(getString(R.string.pref_key_use_default_image), false);
 	}
 
-	public String getImagePath() {
+	public String getImageUri() {
 		return getStringPreference(R.string.pref_key_select_image, null);
 	}
 

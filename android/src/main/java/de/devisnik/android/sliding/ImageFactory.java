@@ -1,12 +1,18 @@
 package de.devisnik.android.sliding;
 
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
 import de.devisnik.sliding.Point;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ImageFactory {
 
@@ -17,7 +23,35 @@ public class ImageFactory {
 	public ImageFactory() {
 	}
 
-	public Bitmap createFromPath(String imagePath, int minSize) {
+	public Bitmap createFromUri(ContentResolver resolver, Uri uri, File tempDir, int minSize) {
+		File tempFile = copyToTempFile(resolver, uri, tempDir);
+		if (tempFile == null) return null;
+		try {
+			return createFromPath(tempFile.getAbsolutePath(), minSize);
+		} finally {
+			tempFile.delete();
+		}
+	}
+
+	private static File copyToTempFile(ContentResolver resolver, Uri uri, File tempDir) {
+		File tempFile = new File(tempDir, "picker_temp_image");
+		try (InputStream in = resolver.openInputStream(uri);
+			 OutputStream out = new FileOutputStream(tempFile)) {
+			if (in == null) return null;
+			byte[] buffer = new byte[8192];
+			int len;
+			while ((len = in.read(buffer)) != -1) {
+				out.write(buffer, 0, len);
+			}
+			return tempFile;
+		} catch (IOException e) {
+			Logger.e(TAG, "Failed to copy URI to temp file: " + e.getMessage());
+			tempFile.delete();
+			return null;
+		}
+	}
+
+	private Bitmap createFromPath(String imagePath, int minSize) {
 		itsImagePath = imagePath;
 		itsMinSize = minSize;
 		return createBitmapFromPath();

@@ -1,6 +1,8 @@
 package de.devisnik.android.sliding;
 
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import java.io.File;
@@ -10,7 +12,7 @@ import java.util.concurrent.Executors;
 class ImageSaver {
 
 	interface Callback {
-		void onImageSaved(String path);
+		void onImageSaved(String uriString);
 	}
 
 	private final ExecutorService itsExecutor;
@@ -27,14 +29,15 @@ class ImageSaver {
 		itsExecutor = executor;
 	}
 
-	void save(String path, int minSize, Callback callback) {
+	void save(Uri uri, ContentResolver resolver, int minSize, Callback callback) {
 		ImageFactory imageFactory = new ImageFactory();
 		ImageCache imageCache = new ImageCache(itsCacheDir);
+		String uriString = uri.toString();
 
 		itsExecutor.submit(() -> {
-			Bitmap bitmap = imageFactory.createFromPath(path, minSize / 2);
+			Bitmap bitmap = imageFactory.createFromUri(resolver, uri, itsCacheDir, minSize / 2);
 			imageCache.put(bitmap);
-			itsMainHandler.post(() -> callback.onImageSaved(path));
+			itsMainHandler.post(() -> callback.onImageSaved(uriString));
 		});
 	}
 
