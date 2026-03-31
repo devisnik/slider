@@ -1,15 +1,12 @@
 package de.devisnik.android.sliding;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -20,82 +17,17 @@ import android.widget.Toast;
 
 public class SlidingPreferences extends PreferenceActivity implements OnPreferenceClickListener {
 
-	private static final int SAVE_IMAGE_PROGRESS = 2222;
 	private static final int REQUEST_SELECT_IMAGE = 1111;
 	private static final String TAG = SlidingPreferences.class.getSimpleName();
 	private final SummaryUpdater itsSummaryUpdater = new SummaryUpdater();
-	private SaveImageTask itsSaveImageTask;
-
-	static class SaveImageTask extends AsyncTask<String, Void, String> {
-
-		private final ImageFactory itsImageFactory;
-		private SlidingPreferences itsActivity;
-		private final ImageCache itsImageCache;
-		private final int itsMinSize;
-		private final SharedPreferences itsPreferences;
-		private final String itsImagePrefKey;
-
-		public SaveImageTask(final SlidingPreferences activity, final SharedPreferences preferences,
-				final String imagePrefKey) {
-			itsActivity = activity;
-			itsPreferences = preferences;
-			itsImagePrefKey = imagePrefKey;
-			itsImageFactory = new ImageFactory();
-			itsImageCache = new ImageCache(activity.getCacheDir());
-			itsMinSize = computeMinSize(activity);
-		}
-
-		private static int computeMinSize(final Activity activity) {
-			int width = activity.getWindowManager().getDefaultDisplay().getWidth();
-			int height = activity.getWindowManager().getDefaultDisplay().getHeight();
-			int maxDisplay = Math.max(width, height);
-			int minSize = maxDisplay > 0 ? maxDisplay : 480;
-			while (minSize * minSize > 2 * width * height)
-				minSize /= 2;
-			Logger.d("SaveImageTask", "maxDisplay=" + maxDisplay + ", minSize will be " + minSize);
-			return minSize;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			if (itsActivity != null)
-				itsActivity.showImageProgress();
-		}
-
-		@Override
-		protected String doInBackground(final String... params) {
-			String imagePath = params[0];
-			Bitmap bitmap = itsImageFactory.createFromPath(imagePath, itsMinSize / 2);
-			itsImageCache.put(bitmap);
-			return imagePath;
-		}
-
-		@Override
-		protected void onPostExecute(final String imagePath) {
-			if (itsActivity != null)
-				itsActivity.hideImageProgress();
-			Editor editor = itsPreferences.edit();
-			editor.putString(itsImagePrefKey, imagePath);
-			editor.commit();
-		}
-
-		void detach() {
-			itsActivity = null;
-		}
-
-		void attach(final SlidingPreferences activity) {
-			itsActivity = activity;
-		}
-
-	}
+	private ImageSaver itsImageSaver;
+	private ProgressDialog itsProgressDialog;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getPreferenceManager().setSharedPreferencesName(SlidingWallpaper.SHARED_PREFS_NAME);
-		itsSaveImageTask = (SaveImageTask) getLastNonConfigurationInstance();
-		if (itsSaveImageTask != null)
-			itsSaveImageTask.attach(this);
+		itsImageSaver = new ImageSaver(getCacheDir());
 		addPreferencesFromResource(R.xml.preferences);
 		Preference imagePreference = findPreferenceWithKey(R.string.pref_key_select_image);
 		imagePreference.setOnPreferenceClickListener(this);
@@ -103,15 +35,15 @@ public class SlidingPreferences extends PreferenceActivity implements OnPreferen
 		adjustListPreference(R.string.pref_key_puzzle_speed);
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		itsImageSaver.shutdown();
+	}
+
 	private Intent createSelectIntent() {
 		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		return intent;
-	}
-
-	@Override
-	public Object onRetainNonConfigurationInstance() {
-		itsSaveImageTask.detach();
-		return itsSaveImageTask;
 	}
 
 	private Preference findPreferenceWithKey(final int key) {
@@ -130,28 +62,19 @@ public class SlidingPreferences extends PreferenceActivity implements OnPreferen
 		return true;
 	}
 
-	@Override
-	protected Dialog onCreateDialog(final int id) {
-		if (id == SAVE_IMAGE_PROGRESS)
-			return createProgressDialog();
-		return super.onCreateDialog(id);
-	}
-
-	private Dialog createProgressDialog() {
-		ProgressDialog dialog = new ProgressDialog(this);
-		dialog.setMessage(getString(R.string.image_progress_message));
-		dialog.setCancelable(false);
-		dialog.setIndeterminate(true);
-		return dialog;
-	}
-
 	public void showImageProgress() {
-		showDialog(SAVE_IMAGE_PROGRESS);
+		itsProgressDialog = new ProgressDialog(this);
+		itsProgressDialog.setMessage(getString(R.string.image_progress_message));
+		itsProgressDialog.setCancelable(false);
+		itsProgressDialog.setIndeterminate(true);
+		itsProgressDialog.show();
 	}
 
 	public void hideImageProgress() {
-		removeDialog(SAVE_IMAGE_PROGRESS);
-		itsSaveImageTask = null;
+		if (itsProgressDialog != null) {
+			itsProgressDialog.dismiss();
+			itsProgressDialog = null;
+		}
 	}
 
 	@Override
@@ -176,9 +99,25 @@ public class SlidingPreferences extends PreferenceActivity implements OnPreferen
 	}
 
 	private void saveImage(final String path) {
-		itsSaveImageTask = new SaveImageTask(this, getPreferenceManager().getSharedPreferences(),
-				getString(R.string.pref_key_select_image));
-		itsSaveImageTask.execute(path);
+		showImageProgress();
+		int minSize = computeMinSize(this);
+		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+		String prefKey = getString(R.string.pref_key_select_image);
+		itsImageSaver.save(path, minSize, savedPath -> {
+			hideImageProgress();
+			prefs.edit().putString(prefKey, savedPath).commit();
+		});
+	}
+
+	private static int computeMinSize(final Activity activity) {
+		int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+		int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+		int maxDisplay = Math.max(width, height);
+		int minSize = maxDisplay > 0 ? maxDisplay : 480;
+		while (minSize * minSize > 2 * width * height)
+			minSize /= 2;
+		Logger.d("SlidingPreferences", "maxDisplay=" + maxDisplay + ", minSize will be " + minSize);
+		return minSize;
 	}
 
 	private String convertDataUriToPath(final Uri data) {
