@@ -19,13 +19,13 @@ def today() {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 36
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId APP_NAME
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 36
         versionCode VERSION_CODE
         versionName VERSION_NAME
     }
@@ -48,8 +48,9 @@ android {
             }
         }
     }
-    lintOptions {
-        abortOnError false;
+    namespace 'de.devisnik.android.sliding'
+    lint {
+        abortOnError false
         lintConfig file('lint_config.xml')
     }
 }
