@@ -9,6 +9,11 @@ android {
     compileSdk = 36
     buildToolsVersion = "30.0.3"
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     defaultConfig {
         applicationId = "de.devisnik.android.sliding"
         minSdk = 21
