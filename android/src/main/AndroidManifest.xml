@@ -30,7 +30,7 @@
             android:name="SlidingPreferences"
             android:exported="true"
             android:label="@string/settings_name"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name="OpenActivity"
